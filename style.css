@@ -1,0 +1,29 @@
+.prettyprint {
+    font-size: 16px;
+    margin: 0;
+}
+
+.code {
+    margin: 15px 0;
+}
+
+.code > .card-body {
+    /* background-color: #f8f9fa; */
+}
+
+.example > .card-body {
+    background-color: rgb(185, 255, 214);
+}
+
+.main-header {
+    
+}
+
+.block-text {
+
+}
+
+.page {
+    height: 1500px;
+    overflow: hidden;
+}
