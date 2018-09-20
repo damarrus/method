@@ -50,7 +50,7 @@ function pCodeBlock($code, $comment = false, $result_code = false, $lang = false
     if ($comment !== false) {
         $result .= '<div class="card-header">' . $comment . '</div>';
     }
-    $result .= '<div class="card-body"><xmp class="prettyprint ' . ($css ? 'lang-css':'') . '">' . $code . '</xmp></div>';
+    $result .= '<div class="card-body"><xmp class="prettyprint">' . $code . '</xmp></div>';
 
     if ($result_code === true) {
         $result .= '<div class="card-footer">' . $code . '</div>';
