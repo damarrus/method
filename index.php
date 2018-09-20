@@ -1,26 +1,25 @@
 <?php
 
 require_once 'functions.php';
-require_once 'data.php';
 
 require_once 'templates/header.php';
 
-foreach ($pages as $key => $page) {
+if ($_REQUEST['page']) {
+    pPage($_REQUEST['page']);
+} else {
+    $pages = [
+        'html_structure',
+        'html_block_elements',
+        'html_string_elements',
+        'javascript_intro',
+        'html_links',
+    ];
     
+    foreach($pages as $page) {
+        pPage($page);
+    }
 }
 
-echo '<div class="page">';
-require 'pages/3_javascript.php';
-echo '</div>';
-
-echo '<div class="page">';
-require 'pages/3_javascript.php';
-echo '</div>';
-
-echo '<div class="page">';
-require 'pages/3_javascript.php';
-echo '</div>';
-
 require_once 'templates/footer.php';
-
+    
 ?>
