@@ -1,0 +1,54 @@
+.prettyprint {
+    font-size: 16px;
+    margin: 0;
+}
+
+.code {
+    margin: 15px 0;
+}
+
+.code > .card-footer {
+    background-color: #fff;
+}
+
+.code > .card-footer p, 
+.code > .card-footer blockquote {
+    margin: 0;
+}
+
+
+
+.code > .card-footer blockquote {
+    padding: 0 50px;
+}
+
+.code.code-html-css > .card-body {
+    padding: 0;
+}
+
+.code .code-html, .code .code-html .card-body, .code .code-html .card-header, 
+.code .code-css, .code .code-css .card-body, .code .code-css .card-header 
+{
+    border: 0;
+}
+
+.code .code-html .card-body, .code .code-html .card-header {
+    border-right: 1px solid rgba(0,0,0,.125);
+}
+
+.code .code-html .card-header, .code .code-css .card-header  {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.page {
+    height: 1500px;
+    overflow: hidden;
+}
+
+.page > h1, .page > h2 {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+
+
