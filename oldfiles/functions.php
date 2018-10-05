@@ -82,10 +82,17 @@ function pCodeBlockHtmlCss($code_html, $code_css, $comment = false, $result_code
             </div>
         </div>';
 
+    // if ($result_code) {
+    //     $result .= '<div class="card-footer">' . $result_code . '</div>';
+    // }
+
+    // $result .= '</div>';
+
     if ($result_code) {
         $result .= '<div class="card-footer">' . $result_code . '</div>';
+        $result .= '<div class="card-footer"><style>' . $code_css . '</style>' . $code_html . '</div>';
     }
-
+    
     $result .= '</div>';
     
     echo $result;
