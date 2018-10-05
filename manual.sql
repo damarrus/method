@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 03 2018 г., 17:01
+-- Время создания: Окт 05 2018 г., 16:54
 -- Версия сервера: 5.7.20
--- Версия PHP: 7.2.0
+-- Версия PHP: 7.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -89,7 +89,8 @@ CREATE TABLE `manuals` (
 --
 
 INSERT INTO `manuals` (`manual_id`, `name`, `description`) VALUES
-(4, 'HTML и CSS', 'Методичка для курса по верстке');
+(4, 'HTML и CSS', 'Методичка для курса по верстке'),
+(5, 'JavaScript', 'Курс по js');
 
 -- --------------------------------------------------------
 
@@ -99,7 +100,7 @@ INSERT INTO `manuals` (`manual_id`, `name`, `description`) VALUES
 
 CREATE TABLE `sections` (
   `section_id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `parent_id` int(11) DEFAULT NULL,
   `manual_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text,
@@ -111,17 +112,17 @@ CREATE TABLE `sections` (
 --
 
 INSERT INTO `sections` (`section_id`, `parent_id`, `manual_id`, `name`, `description`, `position`) VALUES
-(1, 0, 4, 'Введение в HTML', 'Описание раздела', 0),
+(1, NULL, 4, 'Введение в HTML', 'Описание раздела', 0),
 (2, 1, 4, 'Структура документа', 'Описание структуры HTML-документа', 0),
-(3, 1, 4, 'Основные теги', 'Теги HTML, которые в основном используются', 1),
-(4, 0, 4, 'Основы CSS', 'Раздел по основам каскадных таблиц стилей', 2),
-(5, 4, 4, 'Синтаксис CSS', 'Разбор синтаксиса каскадных таблиц стилей', 0),
-(6, 4, 4, 'Селекторы', 'Основные селекторы в CSS', 2),
+(3, NULL, 4, 'Основные теги', 'Теги HTML, которые в основном используются', 1),
+(4, NULL, 4, 'Основы CSS', 'Раздел по основам каскадных таблиц стилей', 5),
+(5, 4, 4, 'Синтаксис CSS', 'Разбор синтаксиса каскадных таблиц стилей', 1),
+(6, 4, 4, 'Селекторы', 'Основные селекторы в CSS', 3),
 (7, 6, 4, 'Селекторы по тегам', 'Разбор селекторов по тегам', 0),
-(8, 0, 4, 'Селекторы по классам', 'Разбор селекторов по классам', 1),
-(9, 4, 4, 'Селекторы по идентификаторам', 'Разбор селекторов по идентификаторам', 1),
-(10, 0, 4, 'Блочные элементы', 'Описание раздела', 0),
-(11, 0, 4, 'Блочная верстка', 'Описание раздела', 0);
+(8, NULL, 4, 'Селекторы по классам', 'Разбор селекторов по классам', 4),
+(9, 4, 4, 'Селекторы по идентификаторам', 'Разбор селекторов по идентификаторам', 2),
+(10, NULL, 4, 'Блочные элементы', 'Описание раздела', 2),
+(11, NULL, 4, 'Блочная верстка', 'Описание раздела', 3);
 
 --
 -- Индексы сохранённых таблиц
@@ -167,7 +168,8 @@ ALTER TABLE `manuals`
 --
 ALTER TABLE `sections`
   ADD PRIMARY KEY (`section_id`),
-  ADD KEY `manual_id` (`manual_id`);
+  ADD KEY `manual_id` (`manual_id`),
+  ADD KEY `parent_id` (`parent_id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -201,13 +203,13 @@ ALTER TABLE `element_types`
 -- AUTO_INCREMENT для таблицы `manuals`
 --
 ALTER TABLE `manuals`
-  MODIFY `manual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `manual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -237,7 +239,8 @@ ALTER TABLE `element_types`
 -- Ограничения внешнего ключа таблицы `sections`
 --
 ALTER TABLE `sections`
-  ADD CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`manual_id`) REFERENCES `manuals` (`manual_id`);
+  ADD CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`manual_id`) REFERENCES `manuals` (`manual_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `sections_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `sections` (`section_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

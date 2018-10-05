@@ -4,7 +4,7 @@
 
 //var_dump($_REQUEST);
 
-include ('../db.php');
+include ("../config/db.php");
 
 foreach ($_REQUEST['blocks'] as $block) {
     $data = serialize($block);

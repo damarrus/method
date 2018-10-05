@@ -3,7 +3,7 @@
 // Рекурсивная функция для получения структуры и информации по разделам методички (всех уровней)
 function getSections($link, $manual_id, $parent_id = 0) {
 
-    $query = "SELECT * FROM sections WHERE manual_id=$manual_id && parent_id=$parent_id ORDER BY position";
+    $query = "SELECT * FROM sections WHERE manual_id=$manual_id && parent_id".($parent_id == 0 ? " IS NULL" : "=$parent_id")." ORDER BY position";
     $result = mysqli_query($link, $query);
 
     if ($result->num_rows > 0) {
@@ -24,15 +24,19 @@ function getSections($link, $manual_id, $parent_id = 0) {
     return $sections;
 }
 
-function printSections($sections, $level = 0) {
-    echo '<ul class="sortable" data-level='.$level.'>';
+function printSections($sections, $first = true) {
+    echo '<ul class="sortable">';
     foreach ($sections as $section) {
         echo '<li class="section" data-section-id="'.$section['section_id'].'">';
-        echo '<span>'.$section['name'].'<a href="section_info.php?id='.$section['section_id'].'">редактировать</a><a href="#">+ подраздел</a><a href="#">удалить раздел</a></span>';
+        echo 
+        '<span>'.$section['name'].'
+            <a href="/" class="delete-section">удалить раздел</a> 
+        </span>'; // <a href="section_info.php?id='.$section['section_id'].'">редактировать</a>
         if (isset($section['sections'])) {
-            printSections($section['sections'], ++$level);
+            printSections($section['sections'], false);
+        } else {
+            echo '<ul class="sortable"></ul>';
         }
-        echo '<ul class="sortable" data-level='.($level+1).'></ul>';
         echo '</li>';
     }
     // echo '<li class="ui-state-default">';
@@ -40,6 +44,15 @@ function printSections($sections, $level = 0) {
     // echo "</li>";
     //echo '<li class="ui-state-default ui-state-disabled" style="list-style-type: none;"><br></li>';
     echo "</ul>";
+    if ($first) {
+        echo 
+        '<form id="add-section" class="form-inline">
+            <div class="form-group mb-3" style="margin-left: 0!important; margin-right: 5px!important;">
+                <input id="add-section-name" type="text" class="form-control form-control-sm" placeholder="Новый раздел" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mb-3">Добавить</button>
+        </form>';
+    }
 }
 
 function printFormAddSection($manual_id, $parent_id) {
