@@ -1,59 +1,128 @@
+let process = false;
+
 $(document).ready(function() {
-    let construct = $('#construct');
+    let section_id = $('#section').data('section-id');
 
-    $('#save-blocks').click(function() {
-        let blocks = construct.children('.block');
+    // Добавить блок в базу и на страницу
+    $('.add-block').click(function() {
         let data = {
-            section_id: 4,
-            blocks: []
-        };
-        blocks.each(function() {
-            switch($(this).data('block-type-id')) {
-                case 1:
-                    let text = $(this).find('textarea').val();
-                    data.blocks.push({text: text});
+            section_id: section_id,
+            block_type_id: $(this).data('block-type-id')
+        }
+
+        $.ajax({
+            url: "../handlers/add_block.php",
+            method: 'POST',
+            data: data,
+            success: function(block){
+                $('#construct > ul').append(block);
             }
         });
-        console.log(data.blocks);
+    });
 
-        $.post( "../handlers/update_blocks.php", data, function(response) {
-            if (response == 1) {
-                alert('Блоки успешно сохранены');
+    // Изменить контент блока
+    $('.content-data').change(function() {
+        let content = {};
+        let block = $(this).parents('.block');
+        block.find('.content-data').each(function() {
+            let content_type = $(this).data('content-type');
+            let content_data;
+
+            if ($(this).attr('type') == 'checkbox') {
+                content_data = $(this).prop("checked") ? 1 : 0;
             } else {
-                alert(response);
+                content_data = $(this).val();
+            }
+            
+            content[content_type] = content_data;
+        });
+
+        let data = {
+            block_id: block.data('block-id'),
+            content: content
+        };
+
+        block.children('.card-header').append('<img width="18" class="ajax-load" src="../images/load.gif"> ');
+
+        $.ajax({
+            url: "../handlers/update_block.php",
+            method: 'POST',
+            data: data,
+            success: function(){
+                block.find('.ajax-load').remove();
             }
         });
     });
 
-    $('#add-text-block').click(function() {
-        construct.append(
-            '<div class="card block block-text" data-block-type-id="1">' +
-                '<h5 class="card-header">Текстовый блок <button class="btn btn-danger btn-sm" onclick="removeBlock(this);">Удалить блок</button></h5>' +
-                '<div class="card-body">' +
-                    '<textarea class="form-control" rows="3"></textarea>' +
-                '</div>' +
-            '</div>'
-        );
-    });
-
-    construct.append(
-        '<div class="card block block-text" data-block-type-id="1">' +
-            '<h5 class="card-header">Текстовый блок <button class="btn btn-danger btn-sm" onclick="removeBlock(this);">Удалить блок</button></h5>' +
-            '<div class="card-body">' +
-                '<textarea class="form-control" rows="3"></textarea>' +
-            '</div>' +
-        '</div>'
-    );
-    construct.append(
-        '<div class="card block block-text" data-block-type-id="1">' +
-            '<h5 class="card-header">Текстовый блок <button class="btn btn-danger btn-sm" onclick="removeBlock(this);">Удалить блок</button></h5>' +
-            '<div class="card-body">' +
-                '<textarea class="form-control" rows="3"></textarea>' +
-            '</div>' +
-        '</div>'
-    );
+    // Устанавливаем возможность сортировки
+    $(".sortable").sortable({
+        placeholder: "ui-state-highlight",
+        update: function( event, ui ) {
+            if (process) {
+                return false;
+            } else {
+                process = true;
+            }
+            let blocks = $('.block');
+            let data = {
+                section_id: section_id,
+                blocks: []
+            };
+    
+            blocks.each(function(index) {
+                data.blocks.push({
+                    block_id: $(this).data('block-id'), 
+                    position: index
+                });
+            });
+    
+            $.post( "../handlers/update_blocks_position.php", data, function(response) {
+                process = false;
+                if (response == 1) {
+                    console.log('sort update');
+                } else {
+                    alert(response);
+                }
+            });
+        }
+    });//.disableSelection();
 });
 
 function removeBlock(button) {
-    $(button).parent().parent().remove();
+    if (process) {
+        return false;
+    } else {
+        process = true;
+    }
+    let data = {block_id: $(button).parents('.block').data('block-id')};
+
+    $.post( "../handlers/delete_block.php", data, function(response) {
+        process = false;
+        if (response == 1) {
+            console.log('block remove');
+            $(button).parents('li').remove();
+        } else {
+            alert(response);
+        }
+    });
+}
+
+function toggleComment(input) {
+    let content_group = $(input).next();
+    console.log(content_group);
+    if ($(input).prop("checked")) {
+        content_group.show();
+    } else {
+        content_group.hide();
+    }
+}
+
+function toggleResult(input) {
+    let content_group = $(input).next();
+    console.log(content_group);
+    if ($(input).prop("checked")) {
+        content_group.show();
+    } else {
+        content_group.hide();
+    }
 }

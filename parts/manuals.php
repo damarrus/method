@@ -1,7 +1,5 @@
 <?php
 
-
-
 $query = "SELECT manual_id as id, name, description FROM manuals";
 $result = mysqli_query($link, $query);
 $manuals = mysqli_fetch_all($result, MYSQLI_ASSOC);

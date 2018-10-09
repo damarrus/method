@@ -24,18 +24,19 @@ function getSections($link, $manual_id, $parent_id = 0) {
     return $sections;
 }
 
+// Рекурсивная функция для вывода структуры разделов методички
 function printSections($sections, $first = true) {
-    echo '<ul class="sortable">';
+    echo '<ul class="sortable section-list">';
     foreach ($sections as $section) {
         echo '<li class="section" data-section-id="'.$section['section_id'].'">';
         echo 
         '<span>'.$section['name'].'
-            <a href="/" class="delete-section">удалить раздел</a> 
+            <a href="section.php?id='.$section['section_id'].'">редактировать</a><a href="/" class="delete-section">удалить раздел</a> 
         </span>'; // <a href="section_info.php?id='.$section['section_id'].'">редактировать</a>
         if (isset($section['sections'])) {
             printSections($section['sections'], false);
         } else {
-            echo '<ul class="sortable"></ul>';
+            echo '<ul class="sortable section-list"></ul>';
         }
         echo '</li>';
     }
@@ -55,14 +56,15 @@ function printSections($sections, $first = true) {
     }
 }
 
-function printFormAddSection($manual_id, $parent_id) {
-    echo '
-    <form action="/handlers/add_section.php" id="add" method="POST">
-        <input type="text" name="name">
-        <input type="hidden" name="description" value="Описание раздела">
-        <input type="hidden" name="manual_id" value="'.$manual_id.'">
-        <input type="hidden" name="parent_id" value="'.$parent_id.'">
-        <input type="submit" value="Добавить">
-    </form>
-    ';
+define('BLOCK_TEXT', 1);
+define('BLOCK_HEADER', 2);
+define('BLOCK_HTML_CODE', 3);
+
+function printBlock($type, $block_id, $content = []) {
+    switch ($type) {
+        case BLOCK_TEXT: $class = 'text'; include '../parts/constructor/block_text.php'; break;
+        case BLOCK_HEADER: $class = 'header'; include '../parts/constructor/block_header.php'; break;
+        case BLOCK_HTML_CODE: $class = 'html-code'; include '../parts/constructor/block_html_code.php'; break;
+        default: echo false;
+    }
 }

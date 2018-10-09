@@ -46,7 +46,7 @@ $(document).ready(function() {
                     });
                 });
         
-                $.post( "../handlers/update_sections.php", data, function(response) {
+                $.post( "../handlers/update_sections_position.php", data, function(response) {
                     process = false;
                     if (response == 1) {
                         console.log('sort update');
@@ -95,6 +95,8 @@ $(document).ready(function() {
         deleteSection(this);
         return false;
     });
+
+    
 });
 
 function deleteSection(self) {
