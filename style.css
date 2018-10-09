@@ -1,22 +1,22 @@
-.sortable {
+.section-list {
     padding: 5px 30px;
     
 }
-.sortable li {
+.section-list li {
     cursor: pointer;    
 }
 
-.sortable li > span {
+.section-list li > span {
     background-color: gold;
 }
 
-.sortable li span > a {
+.section-list li span > a {
     display: none;
     padding-left: 15px;
     background-color: white;
 }
 
-.sortable li span:hover > a {
+.section-list li span:hover > a {
     display: inline;
 }
 
@@ -30,6 +30,22 @@
     margin-top: 15px;
 }
 
-#construct > div.card {
+#construct li > div.card {
     margin: 15px 0;
+}
+
+.mono {
+    font-family: monospace;
+}
+
+#construct-panel {
+    margin: 15px 0;
+}
+
+#construct ul {
+    padding: 0;
+}
+
+#construct li {
+    list-style-type: none;
 }
