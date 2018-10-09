@@ -62,9 +62,9 @@ define('BLOCK_HTML_CODE', 3);
 
 function printBlock($type, $block_id, $content = []) {
     switch ($type) {
-        case BLOCK_TEXT: $class = 'text'; include '../parts/constructor/block_text.php'; break;
-        case BLOCK_HEADER: $class = 'header'; include '../parts/constructor/block_header.php'; break;
-        case BLOCK_HTML_CODE: $class = 'html-code'; include '../parts/constructor/block_html_code.php'; break;
+        case BLOCK_TEXT: $class = 'text'; include '../parts/constructor/block/block_text.php'; break;
+        case BLOCK_HEADER: $class = 'header'; include '../parts/constructor/block/block_header.php'; break;
+        case BLOCK_HTML_CODE: $class = 'html-code'; include '../parts/constructor/block/block_html_code.php'; break;
         default: echo false;
     }
 }

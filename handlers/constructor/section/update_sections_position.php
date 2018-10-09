@@ -1,6 +1,6 @@
 <?php
 
-include ("../config/db.php");
+include ("../../../config/db.php");
 
 foreach ($_REQUEST['sections'] as $section) {
     $section['parent_id'] = ($section['parent_id'] == 0 ? 'NULL' : $section['parent_id']);

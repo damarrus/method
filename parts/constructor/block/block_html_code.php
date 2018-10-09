@@ -1,4 +1,4 @@
-<?php include '../parts/constructor/block_base_start.php' ?>
+<?php include '../parts/constructor/block/block_base_start.php' ?>
     <h5 class="card-header">HTML-код</h5>
     <div class="card-body">
         <div class="form-group content-group">
@@ -36,4 +36,4 @@
         </div>
         <button class="btn btn-danger btn-sm" onclick="removeBlock(this);">Удалить блок</button>
     </div>
-<?php include '../parts/constructor/block_base_end.php' ?>
+<?php include '../parts/constructor/block/block_base_end.php' ?>

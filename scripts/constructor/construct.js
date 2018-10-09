@@ -11,7 +11,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: "../handlers/add_block.php",
+            url: "../handlers/constructor/block/add_block.php",
             method: 'POST',
             data: data,
             success: function(block){
@@ -45,7 +45,7 @@ $(document).ready(function() {
         block.children('.card-header').append('<img width="18" class="ajax-load" src="../images/load.gif"> ');
 
         $.ajax({
-            url: "../handlers/update_block.php",
+            url: "../handlers/constructor/block/update_block.php",
             method: 'POST',
             data: data,
             success: function(){
@@ -76,7 +76,7 @@ $(document).ready(function() {
                 });
             });
     
-            $.post( "../handlers/update_blocks_position.php", data, function(response) {
+            $.post( "../handlers/constructor/block/update_blocks_position.php", data, function(response) {
                 process = false;
                 if (response == 1) {
                     console.log('sort update');
@@ -96,7 +96,7 @@ function removeBlock(button) {
     }
     let data = {block_id: $(button).parents('.block').data('block-id')};
 
-    $.post( "../handlers/delete_block.php", data, function(response) {
+    $.post( "../handlers/constructor/block/delete_block.php", data, function(response) {
         process = false;
         if (response == 1) {
             console.log('block remove');

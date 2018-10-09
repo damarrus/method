@@ -46,7 +46,7 @@ $(document).ready(function() {
                     });
                 });
         
-                $.post( "../handlers/update_sections_position.php", data, function(response) {
+                $.post( "../handlers/constructor/section/update_sections_position.php", data, function(response) {
                     process = false;
                     if (response == 1) {
                         console.log('sort update');
@@ -72,7 +72,7 @@ $(document).ready(function() {
             position: $('#sections > ul > li').length
         };
         
-        $.post( "../handlers/add_section.php", data, function(response) {
+        $.post( "../handlers/constructor/section/add_section.php", data, function(response) {
             process = false;
             if (response) {
                 let field = $('#add-section-name');
@@ -107,7 +107,7 @@ function deleteSection(self) {
     }
     let section = $(self).parent().parent();
     let data = {section_id: section.data('section-id')};
-    $.post( "../handlers/delete_section.php", data, function(response) {
+    $.post( "../handlers/constructor/section/delete_section.php", data, function(response) {
         process = false;
         if (response == 1) {
             section.remove();

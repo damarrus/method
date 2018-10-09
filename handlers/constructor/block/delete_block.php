@@ -1,6 +1,6 @@
 <?php
 
-include ("../config/db.php");
+include ("../../../config/db.php");
 
 $block_id = mysqli_real_escape_string($link, $_POST['block_id']);
 

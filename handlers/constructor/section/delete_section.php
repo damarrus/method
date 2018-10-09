@@ -1,6 +1,6 @@
 <?php
 
-include ("../config/db.php");
+include ("../../../config/db.php");
 
 $section_id = mysqli_real_escape_string($link, $_POST['section_id']);
 
