@@ -56,6 +56,15 @@ function printSections($sections, $first = true) {
     }
 }
 
+function printViewSections($sections, $level = 2) {
+    foreach ($sections as $section) {
+        echo "<h$level>{$section['name']}</h$level>";
+        if (isset($section['sections'])) {
+            printViewSections($section['sections'], ++$level);
+        }
+    }
+}
+
 define('BLOCK_TEXT', 1);
 define('BLOCK_HEADER', 2);
 define('BLOCK_HTML_CODE', 3);

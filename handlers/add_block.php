@@ -1,7 +1,7 @@
 <?php
 
-include ("../../../config/db.php");
-include ('../../../parts/func.php');
+include ("../config/db.php");
+include ('../parts/func.php');
 
 $section_id = mysqli_real_escape_string($link, $_POST['section_id']);
 $block_type_id = mysqli_real_escape_string($link, $_POST['block_type_id']);

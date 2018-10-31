@@ -1,6 +1,6 @@
 <?php
 
-include ("../../../config/db.php");
+include ("../config/db.php");
 
 $manual_id = mysqli_real_escape_string($link, $_POST['manual_id']);
 $name = mysqli_real_escape_string($link, $_POST['name']);

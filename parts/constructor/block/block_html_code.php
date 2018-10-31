@@ -1,5 +1,7 @@
 <?php include '../parts/constructor/block/block_base_start.php' ?>
-    <h5 class="card-header">HTML-код</h5>
+    <h5 class="card-header">HTML-код
+        <button class="btn btn-danger btn-sm float-right" onclick="removeBlock(this);">X</button>
+    </h5>
     <div class="card-body">
         <div class="form-group content-group">
             <textarea class="form-control content-data mono" rows="3" data-content-type="code-content"><?php echo $content['code-content'] ?></textarea>
@@ -34,6 +36,5 @@
                 <?php echo ($content['result'] ? '' : ' style="display: none;"') ?>
             ><?php echo $content['result-content'] ?></textarea>
         </div>
-        <button class="btn btn-danger btn-sm" onclick="removeBlock(this);">Удалить блок</button>
     </div>
 <?php include '../parts/constructor/block/block_base_end.php' ?>

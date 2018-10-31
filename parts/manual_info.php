@@ -15,7 +15,7 @@ $sections = $sections ? $sections : [];
 <div class="card">
     <h2 class="card-header">Основная информация</h2>
     <div class="card-body">
-        <form action="../handlers/constructor/manual/update_manual.php" method="POST">
+        <form action="../handlers/update_manual.php" method="POST">
             Название <input class="form-control" type="text" name="name" value="<?php echo $manual['name'] ?>">
             Описание <textarea class="form-control" name="description"><?php echo $manual['description'] ?></textarea>
             <input type="hidden" name="manual_id" value="<?php echo $manual_id ?>"><br>
@@ -36,7 +36,7 @@ $sections = $sections ? $sections : [];
 <div class="card">
     <h2 class="card-header">Удаление методички</h2>
     <div class="card-body">
-        <form action="../handlers/constructor/manual/delete_manual.php" method="POST">
+        <form action="../handlers/delete_manual.php" method="POST">
             <input type="hidden" name="manual_id" value="<?php echo $manual_id ?>"><br>
             <input class="btn btn-danger" type="submit" value="Удалить методичку">
         </form>

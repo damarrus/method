@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 05 2018 г., 16:54
+-- Время создания: Окт 31 2018 г., 13:05
 -- Версия сервера: 5.7.20
--- Версия PHP: 7.0.26
+-- Версия PHP: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,47 +30,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `blocks` (
   `block_id` int(11) NOT NULL,
+  `section_id` int(11) NOT NULL,
   `block_type_id` int(11) NOT NULL,
-  `section_id` int(11) NOT NULL
+  `content` text,
+  `position` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Структура таблицы `block_types`
+-- Дамп данных таблицы `blocks`
 --
 
-CREATE TABLE `block_types` (
-  `block_type_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `elements`
---
-
-CREATE TABLE `elements` (
-  `element_id` int(11) NOT NULL,
-  `element_type_id` int(11) NOT NULL,
-  `block_id` int(11) NOT NULL,
-  `content` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `element_types`
---
-
-CREATE TABLE `element_types` (
-  `element_type_id` int(11) NOT NULL,
-  `block_type_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `blocks` (`block_id`, `section_id`, `block_type_id`, `content`, `position`) VALUES
+(2, 12, 1, 'a:1:{s:4:\"text\";s:29:\"asdfsafs123\n   1212\n1233dfsfd\";}', 0),
+(8, 12, 3, 'a:5:{s:12:\"code-content\";s:5:\"12332\";s:7:\"comment\";s:1:\"0\";s:15:\"comment-content\";s:15:\"111            \";s:6:\"result\";s:1:\"0\";s:14:\"result-content\";s:42:\"111122                                    \";}', 1),
+(10, 12, 1, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -90,7 +63,7 @@ CREATE TABLE `manuals` (
 
 INSERT INTO `manuals` (`manual_id`, `name`, `description`) VALUES
 (4, 'HTML и CSS', 'Методичка для курса по верстке'),
-(5, 'JavaScript', 'Курс по js');
+(5, 'JavaScript', 'Курс по js1');
 
 -- --------------------------------------------------------
 
@@ -122,7 +95,8 @@ INSERT INTO `sections` (`section_id`, `parent_id`, `manual_id`, `name`, `descrip
 (8, NULL, 4, 'Селекторы по классам', 'Разбор селекторов по классам', 4),
 (9, 4, 4, 'Селекторы по идентификаторам', 'Разбор селекторов по идентификаторам', 2),
 (10, NULL, 4, 'Блочные элементы', 'Описание раздела', 2),
-(11, NULL, 4, 'Блочная верстка', 'Описание раздела', 3);
+(11, NULL, 4, 'Блочная верстка', 'Описание раздела', 3),
+(12, NULL, 5, '123231', 'Описание раздела123выффыв', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -133,29 +107,7 @@ INSERT INTO `sections` (`section_id`, `parent_id`, `manual_id`, `name`, `descrip
 --
 ALTER TABLE `blocks`
   ADD PRIMARY KEY (`block_id`),
-  ADD KEY `block_type_id` (`block_type_id`),
   ADD KEY `section_id` (`section_id`);
-
---
--- Индексы таблицы `block_types`
---
-ALTER TABLE `block_types`
-  ADD PRIMARY KEY (`block_type_id`);
-
---
--- Индексы таблицы `elements`
---
-ALTER TABLE `elements`
-  ADD PRIMARY KEY (`element_id`),
-  ADD KEY `block_id` (`block_id`),
-  ADD KEY `element_type_id` (`element_type_id`);
-
---
--- Индексы таблицы `element_types`
---
-ALTER TABLE `element_types`
-  ADD PRIMARY KEY (`element_type_id`),
-  ADD KEY `block_type_id` (`block_type_id`);
 
 --
 -- Индексы таблицы `manuals`
@@ -179,37 +131,19 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT для таблицы `blocks`
 --
 ALTER TABLE `blocks`
-  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `block_types`
---
-ALTER TABLE `block_types`
-  MODIFY `block_type_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `elements`
---
-ALTER TABLE `elements`
-  MODIFY `element_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `element_types`
---
-ALTER TABLE `element_types`
-  MODIFY `element_type_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `manuals`
 --
 ALTER TABLE `manuals`
-  MODIFY `manual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `manual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -219,21 +153,7 @@ ALTER TABLE `sections`
 -- Ограничения внешнего ключа таблицы `blocks`
 --
 ALTER TABLE `blocks`
-  ADD CONSTRAINT `blocks_ibfk_2` FOREIGN KEY (`block_type_id`) REFERENCES `block_types` (`block_type_id`),
-  ADD CONSTRAINT `blocks_ibfk_3` FOREIGN KEY (`section_id`) REFERENCES `sections` (`section_id`);
-
---
--- Ограничения внешнего ключа таблицы `elements`
---
-ALTER TABLE `elements`
-  ADD CONSTRAINT `elements_ibfk_1` FOREIGN KEY (`block_id`) REFERENCES `blocks` (`block_id`),
-  ADD CONSTRAINT `elements_ibfk_2` FOREIGN KEY (`element_type_id`) REFERENCES `element_types` (`element_type_id`);
-
---
--- Ограничения внешнего ключа таблицы `element_types`
---
-ALTER TABLE `element_types`
-  ADD CONSTRAINT `element_types_ibfk_1` FOREIGN KEY (`block_type_id`) REFERENCES `block_types` (`block_type_id`);
+  ADD CONSTRAINT `blocks_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `sections` (`section_id`);
 
 --
 -- Ограничения внешнего ключа таблицы `sections`

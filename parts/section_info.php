@@ -18,7 +18,7 @@ $blocks = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <div id="section" data-section-id="<?php echo $section_id ?>" class="card">
     <h4 class="card-header">Информация о разделе</h4>
     <div class="card-body">
-        <form action="../handlers/constructor/section/update_section.php" method="POST">
+        <form action="../handlers/update_section.php" method="POST">
             Заголовок <input type="text" name="name" class="form-control" value="<?php echo $section['name'] ?>">
             Описание <textarea type="text" name="description" class="form-control"><?php echo $section['description'] ?></textarea>
             <input type="hidden" name="section_id" value="<?php echo $section_id ?>"><br>
